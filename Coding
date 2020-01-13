@@ -1,1 +1,55 @@
+//pin connection
+//A0(smoke sensor)- A0(Arduino)
+//D0(smoke sensor)- 7(Arduino)
+//gnd(smoke sensor)- gnd(Arduino)
+//Vcc(smoke Sensor)- 5V(Arduino) //for suppling the power
+//Neg Green Light 1- Regester - gnd
+//pos Green Light 1- pin 11(Arduino)
+//Neg Red Light 1- Regester - gnd
+//pos Red Light 1- pin 12(Arduino)
+//Neg buzzer 1- gnd
+//pos buzzer 1- pin 8(Arduino)
+//Neg horizontal line of breadboard- gnd(Arduino) //for making a common ground in the breadboard
 
+int Input = A0;
+int SensorVal =0;
+int redLed = 12;
+int greenLed =11;
+int buzzer = 8;
+
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(redLed, OUTPUT);
+  pinMode(greenLed, OUTPUT);
+  pinMode(Input, INPUT);
+  pinMode(buzzer, OUTPUT);
+  Serial.println("Interfacing of Smoke Sensor with Arduino");
+  Serial. println("PROJECT & DESIGNED BY RAJDIP RAY");
+  Serial.println();
+}
+
+void loop() {
+
+  SensorVal = analogRead(Input);
+  Serial.println(SensorVal);
+ 
+  if(SensorVal > 500)
+  {
+    digitalWrite(redLed, HIGH);
+    digitalWrite(greenLed, LOW);
+    tone(buzzer,1000);
+    Serial.println("SMOKE DETECTED . . .");
+ 
+  }
+
+  else {
+  digitalWrite(redLed, LOW);
+  digitalWrite(greenLed, HIGH);
+  noTone(buzzer);
+ 
+    Serial.println("NO SMOKE . . .");
+  }
+  //Serial.println(SensorVal);
+  delay(200);
+}
